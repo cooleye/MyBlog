@@ -6,9 +6,13 @@ Vue.use(Router)
 import custRoute from './customer';
 import adminRoute from './admin';
 
-export default new Router({
+var router =  new Router({
   routes: [
     ...custRoute,
     ...adminRoute
   ]
 })
+
+router.push('/home')
+
+export default router;

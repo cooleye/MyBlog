@@ -4,24 +4,28 @@ var router = express.Router();
 var Classify = require('../Model/Classify');
 var Article = require('../Model/Article');
 var Comment = require('../Model/Comment');
+var User = require('../Model/User');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
 
+
+/*获取*/
 router.get('/classify',function(req,res){
 	
 	Classify.find({},function(err,result){
 		if(err){
 			console.log(err)
 		}else{
-//			console.log(result)
 			res.send(result)
 		}
 	})
 })
 
+
+/*添加*/
 router.get('/addClass',function(req,res){
 	var cl = req.query.clazz;
 	var clazz = new Classify({
@@ -33,12 +37,13 @@ router.get('/addClass',function(req,res){
 		if(err){
 			console.log(err)
 		}else{
-//			console.log(result)
 			res.send(result)
 		}
 	})
 })
 
+
+/*删除分类*/
 router.get('/delClass',function(req,res){
 	
 	var id = req.query.id;
@@ -62,19 +67,13 @@ router.get('/delClass',function(req,res){
 	})
 })
 
+/*发布文章*/
 router.post('/publish',function(req,res){
 	
 	var content = req.body.content;
 	var title = req.body.title;
 	var classify = req.body.classify;
 	
-//	authorId:{type:Schema.Types.ObjectId},
-//	classify:{type:String},
-//	title:{type:String},
-//	content:{type:String},
-//	createdtime:{type:Date},
-//	stars:{type:Number},
-//	views:{type:Number}
 	var classify = new Article({
 		authorId:null,
 		classify:classify,
@@ -96,6 +95,8 @@ router.post('/publish',function(req,res){
 	
 })
 
+
+/*获取所有文章*/
 router.get('/articles',function(req,res){
 	
 	Article.find({},function(err,result){
@@ -108,6 +109,8 @@ router.get('/articles',function(req,res){
 	})
 })
 
+
+/*删除文章*/
 router.get('/delarticle',function(req,res){
 	var id = req.query.id;
 	
@@ -130,6 +133,8 @@ router.get('/delarticle',function(req,res){
 	})
 })
 
+
+/*获取文章详情*/
 router.get('/article',function(req,res){
 	
 	var id = req.query.id;
@@ -195,6 +200,7 @@ router.post('/addcomment',function(req,res){
 })
 
 
+/*点赞*/
 router.post('/addstar',function(req,res){
 	var id = req.body.articleId;
 	var stars = req.body.stars;
@@ -210,5 +216,39 @@ router.post('/addstar',function(req,res){
 })
 
 
+/*用户注册*/
+router.post('/regist',function(req,res){
+	var username = req.body.username;
+	var userpwd = req.body.userpwd;
+	
+	var user = new User({
+		name:username,
+		pwd:userpwd,
+		avatar:"",
+		createtime:new Date
+	})
+	user.save(function(err,result){
+		if(err){
+			console.log(err)
+		}else{
+			res.send(result)
+		}
+	})
+})
+
+router.post('/login',function(req,res){
+	var username = req.body.username;
+	var userpwd = req.body.userpwd;
+	
+	console.log(username,userpwd)
+	User.find({name:username,pwd:userpwd},function(err,result){
+		if(err){
+			console.log(err)
+		}else{
+			console.log(result)
+			res.send(result)
+		}
+	})
+})
 
 module.exports = router;

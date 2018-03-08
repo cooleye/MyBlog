@@ -15,12 +15,9 @@ export default new Vuex.Store({
   actions: {
     getClassify({commit}){
     		return axios.get('http://localhost:3000/classify')
-    		
     },
     addClass({commit,state},params){
     		return axios.get('http://localhost:3000/addClass?clazz=' + params.clazz)
-    		
-    		
     },
     delClass({commit,state},params){
     		return axios.get('http://localhost:3000/delClass?id=' + params.id)
@@ -45,14 +42,14 @@ export default new Vuex.Store({
     },
     addStar({commit,state},params){
     		return axios.post('http://localhost:3000/addstar',params )
-//		return axios({
-//			method:'get',
-//			url:'http://localhost:3000/addstar?n=11',
-//			data:{
-//				m:2
-//			}
-//		})
+    },
+    regist({commit,state},params){
+    		return axios.post('http://localhost:3000/regist',params )
+    },
+    login({commit,state},params){
+    		return axios.post('http://localhost:3000/login',params )
     }
+    
     
   },
   getters: {}

@@ -1,7 +1,7 @@
 <template>
 	<div class="container">
 		
-		<div class="logo">
+		<div class="toplogo">
 			<img src="../../../static/bird.png"/>
 		</div>
 		<div class="panel">
@@ -12,10 +12,16 @@
 				<span><router-link to="/regist">注册</router-link></span>
 			</div>
 			
-			<el-input v-model="username" placeholder="你的昵称"  prefix-icon="el-icon-news"></el-input>
-			<el-input v-model="userpwd" placeholder="设置密码" type="password"  prefix-icon="el-icon-view"></el-input>
+			<el-form :model="ruleForm" :rules="rules" ref="ruleForm"  class="demo-ruleForm">
+				<el-form-item prop="username">
+			    		<el-input v-model="ruleForm.username" placeholder="你的昵称" auto-complete="off" prefix-icon="el-icon-news"></el-input>
+			  	</el-form-item>
+			  	<el-form-item label="" prop="userpwd">
+			    		<el-input v-model="ruleForm.userpwd" placeholder="设置密码" auto-complete="off" type="password"  prefix-icon="el-icon-view"></el-input>
+			  	</el-form-item>
+			</el-form>
 			
-			<el-button type="primary" round width="200px">登录</el-button>
+			<el-button type="primary" round width="200px" @click="submitForm('ruleForm')">登录</el-button>
 			
 			<p style="margin-top: 20px;">用户协议 和 隐私政策</p>
 		</div>
@@ -26,9 +32,40 @@
 	export default{
 		data(){
 			return {
-				username:'',
-				userpwd:""
+			 	ruleForm: {
+      		 		username: ' ',
+      		 		userpwd:''
+        			},
+        			rules: {
+          			username: [
+			            { required: true, message: '请输入你的昵称', trigger: 'blur' },
+			            { min: 3, max: 6, message: '长度在 3 到 6 个字符', trigger: 'blur' }
+          			],
+          			userpwd: [
+			            { required: true, message: '请输入密码', trigger: 'blur' },
+			            { min: 3, max: 6, message: '长度在 3 到 6 个字符', trigger: 'blur' }
+          			]
+        			}
 			}
+		},
+		methods:{
+			submitForm(formName) {
+		        this.$refs[formName].validate((valid) => {
+		          if (valid) {
+		          	
+					this.$store.dispatch('login',this.ruleForm)
+					.then( res => {
+						console.log(res.data.length)
+						if(res.data.length >=1) {
+							this.$router.push('/home')
+						}
+					})
+		          } else {
+		            console.log('error submit!!');
+		            return false;
+		          }
+		        });
+		      },
 		}
 	}
 </script>
@@ -59,9 +96,6 @@
 		margin-top: 20px;
 		font-size: 18px;
 	}
-	.el-input{
-		margin-top: 20px;
-	}
 	
 	.panel-header{
 		font-size: 20px;
@@ -73,23 +107,25 @@
 		padding: 0 10px;
 		padding: 5px 10px;
 	}
-	.logo{
+	.toplogo{
 		width: 80px;
 		height: 80px;
-		/*border: solid 1px #cfcfcf;*/
 		margin: 20px auto;
 		background-color: #fff;
 		text-align: center;
 		border-radius: 40px;
 		box-shadow: 0px 1px 4px #bbb;
 	}
-	.logo img{
+	.toplogo img{
+		width: 80%;
+		height: 80%;
 		vertical-align: middle;
-		margin-top: 10px;
+		margin-top: 8px;
 	}
 	
 	.router-link-active{
 		color: #ea6f5a !important;
 		border-bottom: solid 2px #ea6f5a;
 	}
+
 </style>
