@@ -1,0 +1,4 @@
+FrontEnd/node_modules
+server/node_modules
+.DS_Store
+.project
