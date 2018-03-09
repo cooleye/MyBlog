@@ -88,7 +88,6 @@ router.post('/publish',function(req,res){
 		if(err){
 			console.log(err)
 		}else{
-//			console.log(result)
 			res.send({msg:'success'})
 		}
 	})
@@ -99,11 +98,35 @@ router.post('/publish',function(req,res){
 /*获取所有文章*/
 router.get('/articles',function(req,res){
 	
+//	var isVisit;
+//	console.log(req.cookies)
+//	if (req.cookies.isVisit) {
+//      req.cookies.isVisit++;
+//  } else {
+//      req.cookies.isVisit = 1;
+//      console.log("Cookies: ", req.cookies); //打印cookie
+//  }
+//  isVisit = req.cookies.isVisit;
+    
 	Article.find({},function(err,result){
 		if(err){
 			console.log(err)
 		}else{
-//			console.log(result)
+//			result.isVisit = isVisit;
+			res.send(result)
+		}
+	})
+})
+
+/*获取所有文章*/
+router.get('/articles_condition',function(req,res){
+
+	var clas = req.query.classify;
+	var condition = {classify:clas};
+	Article.find(condition,function(err,result){
+		if(err){
+			console.log(err)
+		}else{
 			res.send(result)
 		}
 	})
@@ -164,7 +187,8 @@ router.get('/getcomment',function(req,res){
 		if(err){
 			console.log(err)
 		}else{
-			console.log(result)
+//			console.log(result)
+
 			res.send(result)
 		}
 	})
@@ -173,6 +197,8 @@ router.get('/getcomment',function(req,res){
 /*添加评论*/
 router.post('/addcomment',function(req,res){
 
+	console.log('token:',req.cookies.token)
+	
 	var articleId = req.body.articleId;
 	var author = req.body.author;
 	var content = req.body.content;
@@ -209,7 +235,7 @@ router.post('/addstar',function(req,res){
 		if(err){
 			console.log('Error',err)
 		}else{
-			console.log('Res:',res)
+//			console.log('Res:',res)
 			res.send(result)
 		}
 	})
@@ -240,15 +266,25 @@ router.post('/login',function(req,res){
 	var username = req.body.username;
 	var userpwd = req.body.userpwd;
 	
-	console.log(username,userpwd)
-	User.find({name:username,pwd:userpwd},function(err,result){
-		if(err){
-			console.log(err)
+//	console.log(username,userpwd)
+	User.find({name:username,pwd:userpwd},function(err,user){
+		if(err) console.log(err);
+		if(!user){
+			res.send({msg:'用户名或密码错误'})
 		}else{
-			console.log(result)
-			res.send(result)
+			req.session.user = user;
+			var token = new Date().getTime();
+			req.session.token = token;
+			res.send({status:'ok',token:token})
 		}
+		
 	})
 })
+
+/* logout*/
+
+/*修改用户信息*/
+
+
 
 module.exports = router;

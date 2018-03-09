@@ -4,18 +4,13 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var session = require('express-session');
+
 
 var index = require('./routes/index');
 var users = require('./routes/users');
 
 var app = express();
-
-app.all('*',function(req,res,next){
-	res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "X-Requested-With,Content-Type");//预检请求使用
-    res.header("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS");//预检请求使用
-    next();
-})
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -28,6 +23,31 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+app.use(session({
+    secret: '12345', //secret的值建议使用随机字符串
+    cookie: {maxAge: 60 * 1000 * 30}, // 过期时间（毫秒）
+    saveUninitialized:false
+}));
+
+app.all('*',function(req,res,next){
+	res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "X-Requested-With,Content-Type");//预检请求使用
+    res.header("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS");//预检请求使用
+    
+//  console.log(req.cookies)
+//	console.log('1>>',req.session)
+//	if(req.session.sign) {//检查用户是否已经登录
+//      console.log('2>>',req.session);//打印session的值
+//      console.log('欢迎：'+ req.session.name + '再次登录')
+//  } else {//否则展示index页面
+//      req.session.sign = true;
+//      req.session.name = "Davie kong";
+//      console.log('>>欢迎登录',req.session)
+//  }
+    
+    next();
+})
 
 app.use('/', index);
 app.use('/users', users);
@@ -49,5 +69,6 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
 
 module.exports = app;

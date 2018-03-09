@@ -29,6 +29,9 @@
 </template>
 
 <script>
+	
+	import Cookies from 'js-cookie';
+	
 	export default{
 		data(){
 			return {
@@ -55,8 +58,9 @@
 		          	
 					this.$store.dispatch('login',this.ruleForm)
 					.then( res => {
-						console.log(res.data.length)
-						if(res.data.length >=1) {
+						console.log(res.data)
+						if(res.data.status == 'ok') {
+							Cookies.set('token',res.data.token)
 							this.$router.push('/home')
 						}
 					})

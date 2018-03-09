@@ -13,6 +13,6 @@ var router =  new Router({
   ]
 })
 
-router.push('/home')
+router.push('/')
 
 export default router;

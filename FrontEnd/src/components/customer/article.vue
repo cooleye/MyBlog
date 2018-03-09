@@ -1,6 +1,7 @@
 <template>
 	
 	<div  class="container">
+		<div v-loading="loading" class="loading" v-show="loading"></div>
 		<div class="title">
 			{{article.title}}
 		</div>
@@ -64,7 +65,8 @@
 				article:{},
 				textarea:'',
 				comments:[],
-				isTapStar: false
+				isTapStar: false,
+				loading:true
 			}
 		},
 		mounted(){
@@ -74,6 +76,9 @@
 			.then( (res) => {
 				console.log(res)
 				this.article = res.data
+				setTimeout( () => {
+					this.loading = false;
+				},500)
 			})
 			
 			this.$store.dispatch('getComment',{articleId:id})
@@ -81,7 +86,6 @@
 					console.log(res)
 					this.comments = res.data
 				})
-			
 			
 		},
 		methods:{
@@ -158,11 +162,6 @@
 		padding: 5px;
 	}
 	
-	.comment{
-		/*margin-top: 100px;*/
-		/*padding-top: 50px;*/
-		/*border-top: solid 1px #aaa;*/
-	}
 	.line{
 		width: 500px;height: 0px;
 		border-top: solid 1px #eee;
@@ -208,4 +207,10 @@
 		/*padding-left: 5px;*/
 	}
 
+.loading{
+	width: 100%;height: 100%;
+	position: absolute;
+	left: 0;
+	top: 50px;
+}
 </style>

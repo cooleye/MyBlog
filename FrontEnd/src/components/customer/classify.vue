@@ -1,7 +1,7 @@
 <template>
 	
 	<div>
-		 <el-button v-for="c in classifies"  @click="handleClick(c)">{{c.classify}}</el-button>
+		 <el-button v-for="c in classifies" :key="c._id"  @click="handleClick(c)">{{c.classify}}</el-button>
 	</div>
 	
 </template>

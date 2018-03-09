@@ -1,7 +1,7 @@
 <template>
 	<div class="container">
 		
-		<div class="logo">
+		<div class="toplogo">
 			<img src="../../../static/bird.png"/>
 		</div>
 		<div class="panel">
@@ -129,19 +129,20 @@
 		padding: 0 10px;
 		padding: 5px 10px;
 	}
-	.logo{
+	.toplogo{
 		width: 80px;
 		height: 80px;
-		/*border: solid 1px #cfcfcf;*/
 		margin: 20px auto;
 		background-color: #fff;
 		text-align: center;
 		border-radius: 40px;
 		box-shadow: 0px 1px 4px #bbb;
 	}
-	.logo img{
+	.toplogo img{
+		width: 80%;
+		height: 80%;
 		vertical-align: middle;
-		margin-top: 10px;
+		margin-top: 8px;
 	}
 	
 	.router-link-active{

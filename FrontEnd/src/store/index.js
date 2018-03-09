@@ -34,6 +34,9 @@ export default new Vuex.Store({
     getArticleByID({commit,state},params){
     		return axios.get('http://localhost:3000/article?id='+params.id)
     },
+    getArticlesByClass({commit,state},params){
+    		return axios.get('http://localhost:3000/articles_condition?classify='+params.classify)
+    },
     getComment({commit,state},params){
     		return axios.get('http://localhost:3000/getcomment?articleId='+params.articleId)
     },

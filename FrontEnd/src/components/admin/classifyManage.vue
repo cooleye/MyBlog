@@ -106,10 +106,10 @@
 		        }).then(({ value }) => {
 		          this.$message({
 		            type: 'success',
-		            message: '你的邮箱是: ' + value
+		            message: '新增分类: ' + value
 		          });
 		          this.newClassify = value;
-		          console.log('你的邮箱是: ' + value)
+//		          console.log('你的邮箱是: ' + value)
 		          this.$store.dispatch('addClass',{clazz:value})
 		          .then((data) => {
 		          	this.tableData.push(data.data)
@@ -135,10 +135,6 @@
 
 <style scoped="scoped">
 	
-	.container{
-		background-color: #eee;
-	}
-	
 	.table-panel{
 		width: 100%;
 		margin-top: 20px;
@@ -148,12 +144,6 @@
 		text-align: left;
 		padding: 20px;
 	}
-	.table-header-class{
-		background-color: #eee;
-		/*text-align: left !important;*/
-	}
-	table{
-		text-align: left !important;
-	}
+
 	
 </style>

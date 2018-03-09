@@ -14,7 +14,7 @@ export default [
       component: Index,
       children:[
       {
-	      path: '/home',
+	      path: '/',
 	      name: 'Home',
 	      component: Home
 	   },
