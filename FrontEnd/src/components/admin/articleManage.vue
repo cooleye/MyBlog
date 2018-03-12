@@ -134,5 +134,9 @@
 		padding: 20px;
 	}
 	
+	.el-table{
+		border-top: solid 1px #eee;
+	}
+	
 
 </style>

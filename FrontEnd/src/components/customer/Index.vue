@@ -1,6 +1,5 @@
 <template>
 	<div>
-
 		<div class="header">
 			<div>
 				<div class="logo">
@@ -15,7 +14,6 @@
 					</li>
 					<li>
 						<el-input type="text" size="small" class="search" suffix-icon="el-icon-search" v-model="searchval"></el-input>
-
 					</li>
 				
 				</ul>
@@ -25,15 +23,17 @@
 				</div>
 				
 				<div class="user">
-					<el-dropdown  trigger="hover">
+					<el-dropdown  trigger="hover"  @command="handleCommand">
+					  
 					  <span class="el-dropdown-link" style="color: #fff;font-size: 16px;">
-					    <img src="../../../build/logo.png" class="avatar" alt="" />
+					  	<!--<span>{{user.name}}</span>-->
+					    <img :src="user.avatar" class="avatar" alt="" />
 					    <i class="el-icon-arrow-down el-icon--right"></i>
 					  </span>
-					  <el-dropdown-menu slot="dropdown">
-					    <el-dropdown-item><i class="el-icon-menu"></i> 我的主页</el-dropdown-item>
+					  <el-dropdown-menu slot="dropdown"  command="logout">
+					    <el-dropdown-item  command="/admin"><i class="el-icon-menu"></i>我的主页</el-dropdown-item>
 					    <el-dropdown-item><i class="el-icon-document"></i> 收藏文章</el-dropdown-item>
-					    <el-dropdown-item><i class="el-icon-setting"></i> 设置</el-dropdown-item>
+					    <el-dropdown-item command="/admin/profile"><i class="el-icon-setting"></i> 设置</el-dropdown-item>
 					    <el-dropdown-item><i class="el-icon-back"></i> 退出</el-dropdown-item>
 					  </el-dropdown-menu>
 					</el-dropdown>
@@ -61,15 +61,23 @@
 	export default {
 		data() {
 			return {
-				searchval: ''
+				searchval: '',
+				user:this.$store.getters.user
 			}
 		},
 		methods:{
+			handleCommand(command){
+				 this.$router.push(command)
+			},
 			tohome(){
-				this.$router.push('/')	
+				console.log('to home')
+//				this.$router.push('/')	
 			},
 			writeArticle(){
-				this.$router.push('/admin/article-manage')
+				this.$router.push('/admin/createArticle')
+			},
+			logout(){
+				console.log('logout')
 			}
 		}
 	}
@@ -172,4 +180,7 @@
 		margin-right: 20px;
 	}
 	
+	.el-dropdown-menu{
+		color: #000;
+	}
 </style>

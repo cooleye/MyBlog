@@ -11,6 +11,8 @@ import CommentManage from '@/components/admin/commentManage'
 import Regist from '@/components/admin/regist'
 import Login from '@/components/admin/login'
 
+import Cookies from 'js-cookie';
+
 
 
 export default [
@@ -19,6 +21,15 @@ export default [
       path: '/admin',
       name: 'admin',
       component: Admin,
+      beforeEnter: (to, from, next) => {
+        var token = Cookies.get('token');
+	 	console.log('token:',token)
+	   	if(token){
+	   	 	next()
+	   	}else{
+	   		next({ path: '/login' })
+	   	}
+      },
       children:[
       
       	{

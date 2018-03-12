@@ -58,10 +58,12 @@
 		          	
 					this.$store.dispatch('login',this.ruleForm)
 					.then( res => {
-						console.log(res.data)
-						if(res.data.status == 'ok') {
+//						console.log('login:',res)
+						if(res.data) {
+							this.$store.dispatch('saveuser',res.data.user)
+							
 							Cookies.set('token',res.data.token)
-							this.$router.push('/home')
+							this.$router.push('/')
 						}
 					})
 		          } else {

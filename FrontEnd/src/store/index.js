@@ -5,14 +5,26 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    classifies:[]
+    classifies:[],
+    user:{
+    		_id:'',
+    		name:"",
+    		avatar:""
+    }
   },
   mutations: {
    	 saveClass(state,params){
    	 	state.classifies = params.data
+   	 },
+   	 saveuser(state,params){
+   	 	state.user = params
    	 }
   },
+  
   actions: {
+  	saveuser({commit,state},params){
+  		commit("saveuser",params)
+  	},
     getClassify({commit}){
     		return axios.get('http://localhost:3000/classify')
     },
@@ -51,10 +63,18 @@ export default new Vuex.Store({
     },
     login({commit,state},params){
     		return axios.post('http://localhost:3000/login',params )
+    },
+    updateProfile({commit,state},params){
+    		return axios.post('http://localhost:3000/updateprofile',params )
     }
     
     
   },
-  getters: {}
+  getters: {
+  	user(state){
+  		state.user.avatar =  state.user.avatar == "" ? "../../../static/octopus.png" : state.user.avatar;
+  		return state.user;
+  	}
+  }
 })
 

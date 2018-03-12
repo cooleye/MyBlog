@@ -48,7 +48,7 @@
 		data(){
 			return{
 				articles:[],
-				loading:true,
+				loading:false,
 				classifies:[]
 			}
 			
@@ -60,10 +60,9 @@
 		},
 		mounted(){
 			
+			this.loading =true;
 			this.$store.dispatch('getArticles')
 			.then((res) => {
-//				console.log(res)
-				
 				setTimeout( () => {
 					this.articles = res.data
 					this.loading = false;
@@ -72,7 +71,7 @@
 			
 			this.$store.dispatch('getClassify')
 			.then( res => {
-				console.log(res)
+//				console.log(res)
 				this.classifies = res.data
 			})
 			

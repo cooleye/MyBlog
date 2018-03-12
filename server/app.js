@@ -6,11 +6,18 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var session = require('express-session');
 
+//图片上传中间件
+var multer  = require('multer');
+
 
 var index = require('./routes/index');
 var users = require('./routes/users');
 
 var app = express();
+
+
+//设置图片上传路径
+app.use(multer({ dest: 'public/upload/'}).array('avatar'));
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

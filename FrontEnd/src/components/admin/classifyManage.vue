@@ -109,7 +109,6 @@
 		            message: '新增分类: ' + value
 		          });
 		          this.newClassify = value;
-//		          console.log('你的邮箱是: ' + value)
 		          this.$store.dispatch('addClass',{clazz:value})
 		          .then((data) => {
 		          	this.tableData.push(data.data)
@@ -143,6 +142,10 @@
 		width: 100%;
 		text-align: left;
 		padding: 20px;
+	}
+	
+	.el-table{
+		border-top:solid 1px #eee;
 	}
 
 	

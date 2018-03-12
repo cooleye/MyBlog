@@ -9,7 +9,13 @@
 		</el-header>
 		<el-container>
 			<el-aside width="200px">
-				<el-menu :default-openeds="['1']" active-text-color="#ea6f5a" default-active="/admin/article-manage" :router=true align="left">
+				<div class="backtohome"><router-link to="/">返回首页</router-link></div> 
+				<el-menu 
+					:default-openeds="['1']" 
+					active-text-color="#ea6f5a" 
+					background-color="#fff"
+					default-active="/admin/article-manage" 
+					:router=true align="left">
 				<el-submenu index="1">
 					<template slot="title"><i class="el-icon-menu"></i>管理面板</template>
 					<el-menu-item index="/admin/article-manage">文章管理</el-menu-item>
@@ -66,15 +72,11 @@
 </script>
 
 <style scoped="scoped">
-	.el-container {
-		/*width: 100%;*/
-		/*height: 100%;*/
-	}
 	
-	.el-main {
-		/*width: 100%;
-		height: 100%;
-		padding: 0;*/
+	.el-aside{
+		padding-top: 10px;
+		background-color: #f3f3f3;
+		border-right: solid 1px #eee;
 	}
 	
 	.el-header {
@@ -95,5 +97,26 @@
 		background-repeat: no-repeat;
 		background-position: center;
 		top: 15px;
+	}
+	
+	.backtohome{
+		width: 150px;
+		margin: 0 auto;
+		border-radius: 20px;
+		border: solid 1px #ea6f5a;
+		background-color: #fff;
+		
+	}
+	.backtohome a{
+		color: #ea6f5a;
+		display: block;
+		width: 150px;
+		height: 40px;
+		line-height: 40px;
+	}
+	.el-menu{
+		margin-top: 10px;
+		border-top: solid 1px #eee;
+		border-right: 0;
 	}
 </style>
